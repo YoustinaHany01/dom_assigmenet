@@ -3,245 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // =============================================================
-  // 1. THREE.JS — System Diagram Hero (Frontend / Backend / Database)
-  // =============================================================
-  let scene, camera, renderer, systemGroup;
-  let mouseX = 0, mouseY = 0;
-  let targetRotationX = 0, targetRotationY = 0;
-  let packets = [];
-
-  function initThreeScene() {
-    const container = document.getElementById('three-canvas-container');
-    if (!container || typeof THREE === 'undefined') return;
-
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-
-    scene = new THREE.Scene();
-
-    camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 6;
-
-    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    // Ambient light
-    const ambient = new THREE.AmbientLight(0x404060);
-    scene.add(ambient);
-
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
-    scene.add(light);
-
-    // Parent group for mouse parallax
-    systemGroup = new THREE.Group();
-    scene.add(systemGroup);
-
-    const blueprintColor = 0x5B8DEF;
-    const amberColor = 0xF2A65A;
-
-    // Node definitions
-    const nodes = [
-      { label: 'FRONTEND', x: -2.8, y: 1.4, z: 0 },
-      { label: 'BACKEND',  x: 2.8, y: 1.4, z: 0 },
-      { label: 'DATABASE', x: 0, y: -1.8, z: 0 },
-    ];
-
-    // Create node spheres + labels
-    nodes.forEach((n) => {
-      const sphereGeo = new THREE.SphereGeometry(0.45, 24, 16);
-      const sphereMat = new THREE.MeshPhysicalMaterial({
-        color: blueprintColor,
-        emissive: blueprintColor,
-        emissiveIntensity: 0.15,
-        metalness: 0.1,
-        roughness: 0.5,
-        transparent: true,
-        opacity: 0.7,
-        wireframe: false,
-      });
-      const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-      sphere.position.set(n.x, n.y, n.z);
-      systemGroup.add(sphere);
-
-      // Wireframe overlay
-      const wireGeo = new THREE.SphereGeometry(0.48, 16, 10);
-      const wireMat = new THREE.MeshBasicMaterial({
-        color: blueprintColor,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.3,
-      });
-      const wireframe = new THREE.Mesh(wireGeo, wireMat);
-      wireframe.position.set(n.x, n.y, n.z);
-      systemGroup.add(wireframe);
-
-      // Label sprite
-      const canvas = document.createElement('canvas');
-      canvas.width = 256;
-      canvas.height = 64;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#5B8DEF';
-      ctx.font = 'bold 22px "JetBrains Mono", monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(n.label, 128, 32);
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.needsUpdate = true;
-      const spriteMat = new THREE.SpriteMaterial({
-        map: texture,
-        transparent: true,
-        opacity: 0.9,
-        depthWrite: false,
-      });
-      const sprite = new THREE.Sprite(spriteMat);
-      sprite.position.set(n.x, n.y - 1.0, n.z);
-      sprite.scale.set(2.2, 0.55, 1);
-      systemGroup.add(sprite);
-    });
-
-    // Connection lines between nodes
-    const connections = [
-      [0, 1], // Frontend — Backend
-      [0, 2], // Frontend — Database
-      [1, 2], // Backend — Database
-    ];
-
-    const lineMat = new THREE.LineBasicMaterial({
-      color: blueprintColor,
-      transparent: true,
-      opacity: 0.25,
-    });
-
-    connections.forEach(([i, j]) => {
-      const points = [
-        new THREE.Vector3(nodes[i].x, nodes[i].y, nodes[i].z),
-        new THREE.Vector3(nodes[j].x, nodes[j].y, nodes[j].z),
-      ];
-      const geo = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line(geo, lineMat);
-      systemGroup.add(line);
-    });
-
-    // Animated data packets
-    if (!prefersReducedMotion) {
-      connections.forEach(([i, j]) => {
-        const start = new THREE.Vector3(nodes[i].x, nodes[i].y, nodes[i].z);
-        const end = new THREE.Vector3(nodes[j].x, nodes[j].y, nodes[j].z);
-
-        const packetGeo = new THREE.SphereGeometry(0.08, 8, 8);
-        const packetMat = new THREE.MeshBasicMaterial({
-          color: amberColor,
-          transparent: true,
-          opacity: 0.9,
-        });
-        const packet = new THREE.Mesh(packetGeo, packetMat);
-        packet.position.copy(start);
-        systemGroup.add(packet);
-
-        // Glow around packet
-        const glowGeo = new THREE.SphereGeometry(0.14, 8, 8);
-        const glowMat = new THREE.MeshBasicMaterial({
-          color: amberColor,
-          transparent: true,
-          opacity: 0.3,
-        });
-        const glow = new THREE.Mesh(glowGeo, glowMat);
-        glow.position.copy(start);
-        systemGroup.add(glow);
-
-        packets.push({
-          mesh: packet,
-          glow: glow,
-          start: start,
-          end: end,
-          t: Math.random(),
-          speed: 0.002 + Math.random() * 0.003,
-        });
-      });
-    }
-
-    if (prefersReducedMotion) {
-      // Static rotation only, no continuous animation needed beyond a single frame
-      renderer.render(scene, camera);
-    } else {
-      animate();
-    }
-  }
-
-  function animate() {
-    requestAnimationFrame(animate);
-
-    if (systemGroup) {
-      systemGroup.rotation.x += (targetRotationX - systemGroup.rotation.x) * 0.05;
-      systemGroup.rotation.y += (targetRotationY - systemGroup.rotation.y) * 0.05;
-    }
-
-    // Animate packets along connections
-    packets.forEach((p) => {
-      p.t += p.speed;
-      if (p.t > 1) p.t = 0;
-      const x = p.start.x + (p.end.x - p.start.x) * p.t;
-      const y = p.start.y + (p.end.y - p.start.y) * p.t;
-      const z = p.start.z + (p.end.z - p.start.z) * p.t;
-      p.mesh.position.set(x, y, z);
-      p.glow.position.set(x, y, z);
-    });
-
-    if (renderer && scene && camera) {
-      renderer.render(scene, camera);
-    }
-  }
-
-  function onMouseMove(event) {
-    const x = (event.clientX / window.innerWidth) * 2 - 1;
-    const y = -(event.clientY / window.innerHeight) * 2 + 1;
-    targetRotationY = x * 0.3;
-    targetRotationX = y * 0.2;
-  }
-
-  function onResize() {
-    const container = document.getElementById('three-canvas-container');
-    if (!container || !camera || !renderer) return;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
-  }
-
-  const savedColor = localStorage.getItem('portfolio-primary-color');
-  const primaryColor = savedColor || '#5B8DEF';
-
-  function updateThreeColor(color) {
-    // Update node materials in systemGroup
-    if (!systemGroup) return;
-    const c = new THREE.Color(color);
-    systemGroup.children.forEach((child) => {
-      if (child.isMesh && child.material && child.material.color) {
-        child.material.color.set(c);
-        if (child.material.emissive) {
-          child.material.emissive.set(c);
-        }
-      }
-      // Update line colors
-      if (child.isLine && child.material) {
-        child.material.color.set(c);
-      }
-    });
-  }
-
-  updateThreeColor(primaryColor);
-
-  document.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('resize', onResize);
-
-  initThreeScene();
-
-  // =============================================================
-  // 2. SCROLL PROGRESS BAR
+  // 1. SCROLL PROGRESS BAR
   // =============================================================
   const progressBar = document.getElementById('scroll-progress');
 
@@ -256,181 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateProgressBar);
 
   // =============================================================
-  // 3. STEP INDICATOR
-  // =============================================================
-  const stepDots = document.querySelectorAll('.step-dot');
-  const sections = document.querySelectorAll('[data-scroll-section]');
-  const navbarEl = document.querySelector('.navbar');
-  let navH = navbarEl ? navbarEl.offsetHeight : 0;
-
-  const sectionNames = ['Home', 'About', 'Experience', 'Portfolio', 'Testimonials', 'Contact'];
-
-  function updateStepIndicator() {
-    const scrollY = window.scrollY;
-    let activeStep = 0;
-
-    sections.forEach((section, i) => {
-      const top = section.offsetTop - navH - 100;
-      const bottom = top + section.offsetHeight;
-      if (scrollY >= top && scrollY < bottom) {
-        activeStep = i;
-      }
-    });
-
-    stepDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === activeStep);
-      dot.setAttribute('data-tooltip', sectionNames[i] || '');
-    });
-  }
-
-  window.addEventListener('scroll', updateStepIndicator);
-
-  stepDots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      const step = parseInt(dot.getAttribute('data-step'));
-      const target = sections[step];
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-
-  // =============================================================
-  // 4. GSAP SCROLLTRIGGER SCROLLYTELLING (simplified to fade-up)
-  // =============================================================
-  if (!prefersReducedMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-
-    document.querySelectorAll('[data-scroll-item]').forEach((el) => {
-      gsap.set(el, { opacity: 0, y: 40 });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
-        },
-        once: true,
-      });
-    });
-
-    // Hero section parallax on scroll
-    const heroSection = document.querySelector('.hero-section');
-    if (heroSection && systemGroup) {
-      ScrollTrigger.create({
-        trigger: heroSection,
-        start: 'top top',
-        end: 'bottom top',
-        onUpdate: (self) => {
-          const progress = self.progress;
-          systemGroup.rotation.x = progress * 0.5;
-          systemGroup.rotation.y = progress * 1.5;
-        },
-      });
-    }
-
-    // Portfolio stagger animation
-    const portfolioItems = document.querySelectorAll('#portfolio .portfolio-item');
-    if (portfolioItems.length) {
-      ScrollTrigger.create({
-        trigger: '#portfolio',
-        start: 'top 80%',
-        onEnter: () => {
-          gsap.to(portfolioItems, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power3.out',
-          });
-        },
-        once: true,
-      });
-
-      portfolioItems.forEach((item) => {
-        item.addEventListener('mouseenter', () => {
-          gsap.to(item, { scale: 1.03, duration: 0.3, ease: 'power2.out' });
-        });
-        item.addEventListener('mouseleave', () => {
-          gsap.to(item, { scale: 1, duration: 0.3, ease: 'power2.out' });
-        });
-      });
-    }
-  } else {
-    // Fallback: IntersectionObserver (when GSAP unavailable) or instant reveal (reduced motion)
-    var scrollItems = document.querySelectorAll('[data-scroll-item]');
-    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('scrolled');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
-      scrollItems.forEach(function (el) { observer.observe(el); });
-    } else {
-      scrollItems.forEach(function (el) { el.classList.add('scrolled'); });
-    }
-  }
-
-  // Independent reveal for form buttons (avoids GSAP inline-style fragility)
-  var formBtns = document.querySelector('[data-form-buttons]');
-  if (formBtns) {
-    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-      var fbObserver = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              formBtns.classList.add('visible');
-              fbObserver.unobserve(formBtns);
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-      fbObserver.observe(formBtns);
-    } else {
-      formBtns.classList.add('visible');
-    }
-  }
-
-  // =============================================================
-  // 5. 3D TILT EFFECT ON PORTFOLIO CARDS
-  // =============================================================
-  const tiltCards = document.querySelectorAll('.portfolio-item');
-
-  tiltCards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = (y - centerY) / 10;
-      const rotateY = (centerX - x) / 10;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.02)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
-    });
-  });
-
-  // =============================================================
-  // 6. ACTIVE NAV LINK ON SCROLL (Scrollspy)
+  // 2. ACTIVE NAV LINK ON SCROLL (Scrollspy)
   // =============================================================
   const navLinks = document.querySelectorAll('.nav-link');
-  const sectionElements = document.querySelectorAll('section[id]');
+  const sections = document.querySelectorAll('section[id]');
+  const navbar = document.getElementById('header');
+  let navH = navbar ? navbar.offsetHeight : 0;
 
   function updateActiveLink() {
     let current = '';
     const scrollY = window.scrollY;
 
-    sectionElements.forEach((section) => {
+    sections.forEach((section) => {
       const sectionTop = section.offsetTop - navH - 50;
       const sectionBottom = sectionTop + section.offsetHeight;
       if (scrollY >= sectionTop && scrollY < sectionBottom) {
@@ -449,13 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateActiveLink);
 
   window.addEventListener('resize', () => {
-    navH = navbarEl ? navbarEl.offsetHeight : 0;
+    navH = navbar ? navbar.offsetHeight : 0;
   });
 
   // =============================================================
-  // 7. DARK / LIGHT MODE TOGGLE
+  // 3. THEME TOGGLE (Dark / Light Mode)
   // =============================================================
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggle = document.getElementById('theme-toggle-button');
   const htmlTag = document.documentElement;
   const DARK_CLASS = 'dark';
   const THEME_STORAGE_KEY = 'portfolio-theme';
@@ -477,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =============================================================
-  // 8. PORTFOLIO TABS / FILTER
+  // 4. PORTFOLIO FILTER
   // =============================================================
   const filterButtons = document.querySelectorAll('.filter-btn');
   const portItems = document.querySelectorAll('.portfolio-item');
@@ -505,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =============================================================
-  // 9. TESTIMONIALS CAROUSEL
+  // 5. TESTIMONIALS CAROUSEL
   // =============================================================
   const track = document.querySelector('.carousel-track');
   const slides = document.querySelectorAll('.carousel-slide');
@@ -547,9 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
       dot.addEventListener('click', () => goToSlide(i));
     });
 
-    function startAutoplay(interval = 4000) {
+    function startAutoplay(interval) {
       stopAutoplay();
-      autoplayInterval = setInterval(nextSlide, interval);
+      autoplayInterval = setInterval(nextSlide, interval || 4000);
     }
 
     function stopAutoplay() {
@@ -569,43 +168,123 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =============================================================
-  // 10. SIDEBAR CUSTOMIZER
+  // 6. SIDEBAR CUSTOMIZER — Theme Colors & Fonts
   // =============================================================
   const customizerToggle = document.getElementById('customizer-toggle');
-  const customizerSidebar = document.querySelector('.customizer-sidebar');
+  const customizerSidebar = document.getElementById('customizer-sidebar');
 
   if (customizerToggle && customizerSidebar) {
+    // Toggle sidebar
     customizerToggle.addEventListener('click', () => {
       customizerSidebar.classList.toggle('open');
     });
 
+    // Color swatches
     const colorSwatches = document.querySelectorAll('.color-swatch');
+    const PRIMARY_PROP = '--primary';
+    const SECONDARY_PROP = '--secondary';
+    const ACCENT_PROP = '--accent';
+
+    // Color scheme presets
+    const colorSchemes = {
+      '#4a7cff': { primary: '#4a7cff', secondary: '#8b5cf6', accent: '#f59e0b' },
+      '#8b5cf6': { primary: '#8b5cf6', secondary: '#ec4899', accent: '#f59e0b' },
+      '#06b6d4': { primary: '#06b6d4', secondary: '#3b82f6', accent: '#10b981' },
+      '#f59e0b': { primary: '#f59e0b', secondary: '#f97316', accent: '#ef4444' },
+      '#ef4444': { primary: '#ef4444', secondary: '#ec4899', accent: '#f59e0b' },
+      '#10b981': { primary: '#10b981', secondary: '#06b6d4', accent: '#8b5cf6' },
+      '#ec4899': { primary: '#ec4899', secondary: '#8b5cf6', accent: '#f59e0b' },
+      '#f97316': { primary: '#f97316', secondary: '#f59e0b', accent: '#ef4444' },
+    };
+
+    function applyColorScheme(primaryColor) {
+      const scheme = colorSchemes[primaryColor] || colorSchemes['#4a7cff'];
+      document.documentElement.style.setProperty(PRIMARY_PROP, scheme.primary);
+      document.documentElement.style.setProperty(SECONDARY_PROP, scheme.secondary);
+      document.documentElement.style.setProperty(ACCENT_PROP, scheme.accent);
+      localStorage.setItem('portfolio-primary-color', scheme.primary);
+      localStorage.setItem('portfolio-secondary-color', scheme.secondary);
+      localStorage.setItem('portfolio-accent-color', scheme.accent);
+
+      colorSwatches.forEach((swatch) => {
+        swatch.classList.toggle('active', swatch.getAttribute('data-color') === primaryColor);
+      });
+    }
+
     colorSwatches.forEach((swatch) => {
       swatch.addEventListener('click', function () {
         const color = this.getAttribute('data-color');
-        document.documentElement.style.setProperty('--primary-color', color);
-        localStorage.setItem('portfolio-primary-color', color);
-        updateThreeColor(color);
+        applyColorScheme(color);
       });
     });
 
+    // Font buttons
     const fontButtons = document.querySelectorAll('.font-btn');
+    const BODY_FONT_PROP = '--body-font';
+
+    function applyFont(fontFamily) {
+      // fontFamily like "'Tajawal', sans-serif"
+      document.documentElement.style.setProperty(BODY_FONT_PROP, fontFamily);
+      localStorage.setItem('portfolio-body-font', fontFamily);
+
+      fontButtons.forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-font') === fontFamily);
+      });
+    }
+
     fontButtons.forEach((btn) => {
       btn.addEventListener('click', function () {
         const font = this.getAttribute('data-font');
-        document.documentElement.style.setProperty('--main-font', font);
-        localStorage.setItem('portfolio-main-font', font);
+        applyFont(font);
       });
     });
 
-    const savedFont = localStorage.getItem('portfolio-main-font');
+    // Restore saved state
+    const savedPrimary = localStorage.getItem('portfolio-primary-color');
+    const savedSecondary = localStorage.getItem('portfolio-secondary-color');
+    const savedAccent = localStorage.getItem('portfolio-accent-color');
+    const savedFont = localStorage.getItem('portfolio-body-font');
+
+    if (savedPrimary) {
+      document.documentElement.style.setProperty(PRIMARY_PROP, savedPrimary);
+      colorSwatches.forEach((swatch) => {
+        swatch.classList.toggle('active', swatch.getAttribute('data-color') === savedPrimary);
+      });
+    }
+    if (savedSecondary) document.documentElement.style.setProperty(SECONDARY_PROP, savedSecondary);
+    if (savedAccent) document.documentElement.style.setProperty(ACCENT_PROP, savedAccent);
     if (savedFont) {
-      document.documentElement.style.setProperty('--main-font', savedFont);
+      document.documentElement.style.setProperty(BODY_FONT_PROP, savedFont);
+      fontButtons.forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-font') === savedFont);
+      });
+    }
+
+    // Reset button
+    const resetBtn = document.getElementById('customizer-reset');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', function () {
+        localStorage.removeItem('portfolio-primary-color');
+        localStorage.removeItem('portfolio-secondary-color');
+        localStorage.removeItem('portfolio-accent-color');
+        localStorage.removeItem('portfolio-body-font');
+
+        document.documentElement.style.removeProperty(PRIMARY_PROP);
+        document.documentElement.style.removeProperty(SECONDARY_PROP);
+        document.documentElement.style.removeProperty(ACCENT_PROP);
+        document.documentElement.style.removeProperty(BODY_FONT_PROP);
+
+        colorSwatches.forEach((sw) => sw.classList.remove('active'));
+        colorSwatches[0].classList.add('active');
+
+        fontButtons.forEach((fb) => fb.classList.remove('active'));
+        document.querySelector('.font-btn[data-font="\'Tajawal\', sans-serif"]')?.classList.add('active');
+      });
     }
   }
 
   // =============================================================
-  // 11. SCROLL TO TOP BUTTON
+  // 7. SCROLL TO TOP
   // =============================================================
   const scrollTopBtn = document.getElementById('scroll-to-top');
 
@@ -626,7 +305,107 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =============================================================
-  // 12. HERO ENTRANCE ANIMATION
+  // 8. GSAP SCROLL ANIMATIONS
+  // =============================================================
+  if (!prefersReducedMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Fade-up for scroll items
+    document.querySelectorAll('[data-scroll-item]').forEach((el) => {
+      gsap.set(el, { opacity: 0, y: 40 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
+        },
+        once: true,
+      });
+    });
+
+    // Skill bar fill animation
+    document.querySelectorAll('.skill-bar-fill').forEach((bar) => {
+      const width = bar.style.width;
+      gsap.set(bar, { width: '0%' });
+      ScrollTrigger.create({
+        trigger: bar.closest('.skill-card'),
+        start: 'top 85%',
+        onEnter: () => {
+          gsap.to(bar, { width: width, duration: 1, ease: 'power3.out' });
+        },
+        once: true,
+      });
+    });
+
+    // Portfolio stagger
+    const portfolioItems = document.querySelectorAll('#portfolio .portfolio-item');
+    if (portfolioItems.length) {
+      ScrollTrigger.create({
+        trigger: '#portfolio',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.to(portfolioItems, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power3.out',
+          });
+        },
+        once: true,
+      });
+    }
+  } else {
+    // Fallback: IntersectionObserver
+    var scrollItems = document.querySelectorAll('[data-scroll-item]');
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('scrolled');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      scrollItems.forEach(function (el) { observer.observe(el); });
+    } else {
+      scrollItems.forEach(function (el) { el.classList.add('scrolled'); });
+    }
+
+    // Skill bars fallback - set width directly
+    document.querySelectorAll('.skill-bar-fill').forEach((bar) => {
+      // Already has width set in HTML style, no GSAP needed
+    });
+  }
+
+  // =============================================================
+  // 9. 3D TILT EFFECT ON PORTFOLIO CARDS
+  // =============================================================
+  const tiltCards = document.querySelectorAll('.portfolio-item');
+
+  tiltCards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+    });
+  });
+
+  // =============================================================
+  // 10. HERO ENTRANCE ANIMATION
   // =============================================================
   const entranceElements = document.querySelectorAll('[data-entrance]');
 
@@ -650,112 +429,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =============================================================
-  // 13. CORNER COORDINATE MARKS
-  // =============================================================
-  function addCornerMarks() {
-    const sections = document.querySelectorAll('section[id]:not(#home)');
-    const coords = ['X:140 Y:60', 'X:240 Y:80', 'X:360 Y:40', 'X:180 Y:90', 'X:200 Y:70'];
-    sections.forEach((section, i) => {
-      const mark = document.createElement('span');
-      mark.className = 'corner-mark';
-      mark.textContent = coords[i] || 'X:000 Y:000';
-      section.prepend(mark);
-    });
-  }
-  addCornerMarks();
-
-  // =============================================================
-  // 14. PORTFOLIO CATEGORY BADGES (spec sheet tags)
-  // =============================================================
-  function addProjectTags() {
-    document.querySelectorAll('.portfolio-item').forEach((item) => {
-      const category = item.getAttribute('data-category');
-      if (!category) return;
-      const info = item.querySelector('.info');
-      if (!info) return;
-      const tag = document.createElement('span');
-      tag.className = 'project-tag';
-      tag.textContent = `[ ${category.toUpperCase()} ]`;
-      info.prepend(tag);
-    });
-  }
-  addProjectTags();
-
-  // =============================================================
-  // 15. FORM BUTTON INTERACTIONS
+  // 10. CONTACT FORM INTERACTIONS
   // =============================================================
   const contactForm = document.querySelector('.contact-form');
-  const submitBtn = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
-  const resetBtn = contactForm ? contactForm.querySelector('button[type="reset"]') : null;
-  const formBtnsContainer = contactForm ? contactForm.querySelector('.form-buttons') : null;
 
   if (contactForm) {
-    // --- Reset feedback ---
-    if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        if (!prefersReducedMotion) {
-          this.classList.add('resetting');
-          setTimeout(() => this.classList.remove('resetting'), 500);
-          contactForm.querySelectorAll('fieldset').forEach(function (fs) {
-            fs.classList.remove('form-flash');
-            void fs.offsetWidth;
-            fs.classList.add('form-flash');
-            setTimeout(function () { fs.classList.remove('form-flash'); }, 500);
-          });
-        }
-        showClearedMessage();
-      });
-    }
-
-    function showClearedMessage() {
-      if (!formBtnsContainer) return;
-      var msg = formBtnsContainer.querySelector('.form-cleared-msg');
-      if (!msg) {
-        msg = document.createElement('span');
-        msg.className = 'form-cleared-msg';
-        msg.textContent = '> Form cleared';
-        formBtnsContainer.appendChild(msg);
-      }
-      msg.classList.add('show');
-      setTimeout(function () { msg.classList.remove('show'); }, 2500);
-    }
-
-    // --- Submit animation ---
-    if (submitBtn) {
-      contactForm.addEventListener('submit', function (e) {
-        if (!contactForm.reportValidity()) return;
-        if (prefersReducedMotion) return;
-        e.preventDefault();
-
-        submitBtn.classList.add('sending');
-        submitBtn.disabled = true;
-
-        setTimeout(function () {
-          submitBtn.classList.remove('sending');
-          submitBtn.classList.add('sent');
-          var svg = submitBtn.querySelector('svg');
-          if (svg) {
-            svg.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
-          }
-          var childNodes = submitBtn.childNodes;
-          for (var i = 0; i < childNodes.length; i++) {
-            if (childNodes[i].nodeType === 3) {
-              childNodes[i].textContent = ' Sent';
-            }
-          }
-          setTimeout(function () {
-            contactForm.submit();
-          }, 500);
-        }, 800);
-      });
-    }
+    contactForm.addEventListener('submit', function (e) {
+      if (!contactForm.reportValidity()) return;
+      if (prefersReducedMotion) return;
+      // Let the form submit normally to ./pages/done.html
+      // No preventDefault — just let it go
+    });
   }
 
   // =============================================================
-  // 16. INIT UPDATES
+  // 11. INIT UPDATES
   // =============================================================
   updateProgressBar();
-  updateStepIndicator();
   updateActiveLink();
 
 });

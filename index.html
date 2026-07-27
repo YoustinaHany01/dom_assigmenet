@@ -1,609 +1,957 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Youstina Hany | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  </head>
-  <body>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>يوستينا هاني | مطورة ويب متكاملة</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 
-    <div id="scroll-progress"></div>
+  <script>
+    window.FontAwesomeConfig = { autoReplaceSvg: "nest" };
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="font-tajawal" id="body">
 
-    <div id="step-indicator">
-      <div class="step-dot active" data-step="0"></div>
-      <div class="step-dot" data-step="1"></div>
-      <div class="step-dot" data-step="2"></div>
-      <div class="step-dot" data-step="3"></div>
-      <div class="step-dot" data-step="4"></div>
-      <div class="step-dot" data-step="5"></div>
-    </div>
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
 
-    <!-- ============================================================
-         NAVBAR
-         ============================================================ -->
-    <nav class="navbar">
-      <div class="logo">YH</div>
+  <!-- ============================================
+       NAVBAR
+       ============================================ -->
+  <nav id="header">
+    <div class="container navbar-inner">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">
+          <i class="fa-solid fa-code"></i>
+        </div>
+        <span class="nav-logo-text">يوستينا هاني</span>
+      </div>
       <ul class="nav-links">
-        <li><a href="#home" class="nav-link">Home</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#hero-section" class="nav-link active">الرئيسية</a></li>
+        <li><a href="#about" class="nav-link">عني</a></li>
+        <li><a href="#skills-section" class="nav-link">المهارات</a></li>
+        <li><a href="#portfolio" class="nav-link">الأعمال</a></li>
+        <li><a href="#experience" class="nav-link">الخبرة</a></li>
+        <li><a href="#testimonials" class="nav-link">التوصيات</a></li>
+        <li><a href="#contact" class="nav-link">تواصل</a></li>
       </ul>
-      <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
-    </nav>
+      <button id="theme-toggle-button" class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-toggle-circle">
+          <i class="fa-solid fa-sun theme-icon-sun"></i>
+          <i class="fa-solid fa-moon theme-icon-moon"></i>
+        </span>
+      </button>
+    </div>
+  </nav>
 
-    <!-- ============================================================
-         HOME / HERO SECTION
-         ============================================================ -->
-    <section id="home" class="hero-section" data-scroll-section>
-      <div id="three-canvas-container"></div>
-      <div class="hero-bg" style="background-image: url('./images/hero-bg-img.png');"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-img-wrapper" data-entrance>
-          <img src="./images/youstina.jpeg" alt="Youstina Hany" class="hero-img" />
-        </div>
-        <h1 class="hero-title" data-entrance>Youstina Hany</h1>
-        <p class="hero-subtitle" data-entrance>Professional <span class="text-accent">Web Developer</span></p>
-        <p class="hero-tagline" data-entrance>Full-Stack Developer · UI/UX Enthusiast · Creative Problem Solver</p>
-        <div class="hero-buttons" data-entrance>
-          <a href="#portfolio" class="btn btn-primary">View My Work</a>
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
-        </div>
-      </div>
-    </section>
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section id="hero-section" class="hero-section">
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-grid-overlay"></div>
 
-    <!-- ============================================================
-         ABOUT SECTION
-         ============================================================ -->
-    <section id="about" data-scroll-section data-scroll-step="1">
-      <h2 class="section-title" data-fig="01">ABOUT</h2>
-      <div class="about-content">
-        <div class="about-image" data-scroll-item data-animate="flip-in">
-          <img src="./images/youstina.jpeg" alt="Youstina Hany's photo" />
-        </div>
-        <div class="about-text" data-scroll-item data-animate="slide-right">
-          <p>
-            Hello! I'm a Computer Science graduate and a passionate Full-Stack
-            Developer. I specialize in building end-to-end web applications,
-            combining technical logic with seamless user experiences. I thrive
-            on turning complex problems into functional, high-quality digital
-            solutions.
+    <div class="container hero-inner">
+      <div class="hero-grid">
+        <!-- Right side (RTL) - text content -->
+        <div class="hero-text-wrapper">
+          <div class="hero-status-badge" data-entrance>
+            <span class="status-dot"></span>
+            <span>متاحة للعمل</span>
+          </div>
+
+          <div class="hero-heading" data-entrance>
+            <p class="hero-greeting">مرحباً، أنا 👋</p>
+            <h1 class="hero-name">
+              <span class="hero-name-gradient">يوستينا هاني</span>
+            </h1>
+          </div>
+
+          <div class="hero-role-badge" data-entrance>
+            <div class="role-icon-wrapper">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span>مطورة ويب متكاملة</span>
+          </div>
+
+          <p class="hero-description" data-entrance>
+            بشتغل على تحويل الأفكار لـ <span class="text-primary-semibold">تجارب رقمية مميزة</span>.
+            متخصصة في بناء تطبيقات ويب حديثة باستخدام أحدث التقنيات.
           </p>
-          <p style="margin-top: 1rem;">
-            My background in Computer Science has given me a solid foundation in
-            software engineering and modern web technologies. I am committed to
-            writing clean, maintainable code and am always eager to learn and
-            adapt to the ever-evolving tech landscape.
-          </p>
-          <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Skills</h3>
-          <ul class="skills-list">
-            <li data-scroll-item data-animate="pop-in"><a href="./pages/HTML.html">HTML</a></li>
-            <li data-scroll-item data-animate="pop-in"><a href="./pages/CSS.html">CSS</a></li>
-            <li data-scroll-item data-animate="pop-in"><a href="./pages/JS.html">JavaScript</a></li>
-            <li data-scroll-item data-animate="pop-in"><a href="./pages/Reactjs.html">React.js</a></li>
-            <li data-scroll-item data-animate="pop-in"><a href="./pages/Angular.html">Angular</a></li>
-          </ul>
-          <div class="social-links">
-            <a href="#"><img src="./images/Facebook_logo_(square).png" alt="Facebook" /></a>
-            <a href="#"><img src="./images/LinkedIn_icon.svg.webp" alt="LinkedIn" /></a>
-            <a href="#"><img src="./images/instagram-6338393_960_720.webp" alt="Instagram" /></a>
-            <a href="#"><img src="./images/github_logo.png" alt="GitHub" /></a>
+
+          <div class="hero-buttons" data-entrance>
+            <a href="#portfolio" class="btn btn-primary">
+              <span>استكشف أعمالي</span>
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <a href="#contact" class="btn btn-outline">
+              <span>تواصل معي</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </a>
+          </div>
+
+          <div class="hero-tech-stack" data-entrance>
+            <div class="tech-pill">
+              <i class="fa-brands fa-react" style="color:#61DAFB;"></i>
+              <span>React</span>
+            </div>
+            <div class="tech-pill">
+              <i class="fa-brands fa-js" style="color:#F7DF1E;"></i>
+              <span>JavaScript</span>
+            </div>
+            <div class="tech-pill">
+              <i class="fa-brands fa-node-js" style="color:#339933;"></i>
+              <span>Node.js</span>
+            </div>
+            <div class="tech-pill">
+              <i class="fa-brands fa-html5" style="color:#E34F26;"></i>
+              <span>HTML</span>
+            </div>
+            <div class="tech-pill">
+              <i class="fa-brands fa-css3-alt" style="color:#1572B6;"></i>
+              <span>CSS</span>
+            </div>
+            <div class="tech-pill">
+              <i class="fa-brands fa-angular" style="color:#DD0031;"></i>
+              <span>Angular</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left side (RTL) - image / visual -->
+        <div class="hero-visual-wrapper">
+          <div class="hero-rings">
+            <div class="ring ring-outer"></div>
+            <div class="ring ring-inner"></div>
+          </div>
+          <div class="hero-image-container">
+            <div class="hero-image-border"></div>
+            <div class="hero-image-frame">
+              <img src="./images/youstina.jpeg" alt="يوستينا هاني" loading="lazy" decoding="async" />
+            </div>
+          </div>
+          <div class="hero-floating-badge badge-1">
+            <i class="fa-brands fa-react" style="color:#61DAFB;"></i>
+          </div>
+          <div class="hero-floating-badge badge-2">
+            <i class="fa-brands fa-angular" style="color:#DD0031;"></i>
+          </div>
+          <div class="hero-floating-badge badge-3">
+            <i class="fa-brands fa-js" style="color:#F7DF1E;"></i>
+          </div>
+          <div class="hero-floating-badge badge-4">
+            <i class="fa-solid fa-code" style="color:var(--primary);"></i>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ============================================================
-         EXPERIENCE SECTION
-         ============================================================ -->
-    <section id="experience" data-scroll-section data-scroll-step="2">
-      <h2 class="section-title" data-fig="02">EXPERIENCE</h2>
-      <p style="text-align: center; margin-bottom: 2rem;">Professional Experience Overview</p>
-      <table class="experience-table">
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Logo</th>
-            <th>Role</th>
-            <th>Key Achievements</th>
-            <th>Dates</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-scroll-item data-animate="slide-left">
-            <td rowspan="2">Tech Corp Solutions</td>
-            <td rowspan="2">
-              <img src="./images/techcorp_solutions_logo.jpg" alt="TechCorp logo" />
-            </td>
-            <td>Senior FullStack Developer</td>
-            <td>
-              <ul>
-                <li>Lead development of web applications</li>
-                <li>Mentor junior developers</li>
-                <li>Architect scalable solutions</li>
-              </ul>
-            </td>
-            <td>Jan 2023 - Present</td>
-          </tr>
-          <tr data-scroll-item data-animate="slide-right">
-            <td>FullStack Developer</td>
-            <td>
-              <ul>
-                <li>Developed responsive web applications</li>
-                <li>Collaborated with design teams</li>
-                <li>Optimized application performance</li>
-              </ul>
-            </td>
-            <td>2021 - 2020</td>
-          </tr>
-          <tr data-scroll-item data-animate="slide-left">
-            <td>Digital Agency Pro</td>
-            <td>
-              <img src="./images/digital_agency_pro.jpg" alt="Digital Agency logo" />
-            </td>
-            <td>Frontend Developer</td>
-            <td>
-              <ul>
-                <li>Built user interfaces from mockups</li>
-                <li>Implemented responsive designs</li>
-                <li>Conducted code reviews</li>
-              </ul>
-            </td>
-            <td>2019 - 2020</td>
-          </tr>
-          <tr data-scroll-item data-animate="slide-right">
-            <td>Web Design Studio</td>
-            <td>
-              <img src="./images/Web_design_Studio.webp" alt="Web Design Studio logo" />
-            </td>
-            <td>Junior Web Developer</td>
-            <td>
-              <ul>
-                <li>Maintained existing websites</li>
-                <li>Fixed bugs and implemented features</li>
-                <li>Learned best practices</li>
-              </ul>
-            </td>
-            <td>2019 - 2020</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="5">Total Experience: 5+ years in Web Development</td>
-          </tr>
-        </tfoot>
-      </table>
-    </section>
+      <a href="#about" class="scroll-indicator">
+        <span>اكتشف المزيد</span>
+        <div class="scroll-mouse">
+          <div class="scroll-dot"></div>
+        </div>
+      </a>
+    </div>
+  </section>
 
-    <!-- ============================================================
-         PORTFOLIO SECTION
-         ============================================================ -->
-    <section id="portfolio" data-scroll-section data-scroll-step="3">
-      <h2 class="section-title" data-fig="03">PORTFOLIO</h2>
+  <!-- ============================================
+       ABOUT SECTION
+       ============================================ -->
+  <section id="about" class="section-block">
+    <div class="section-bg-glow glow-1"></div>
 
-      <div class="portfolio-tabs">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="web">Web</button>
-        <button class="filter-btn" data-filter="app">App</button>
-        <button class="filter-btn" data-filter="design">Design</button>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">من أنا</span>
+        <h2 class="section-title">عن <span class="title-gradient">يوستينا هاني</span></h2>
+        <div class="section-divider"></div>
       </div>
 
-      <div class="portfolio-grid">
-        <div class="portfolio-item" data-category="web" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/featured-properties-img-1.png" alt="E-Commerce" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
+      <div class="about-grid">
+        <!-- Right side (RTL) - text -->
+        <div class="about-text-col">
+          <div class="about-bio">
+            <div class="about-quote-deco">"</div>
+            <h3 class="about-bio-heading">
+              بحب أحول الأفكار <span class="text-primary">لواقع رقمي</span>
+            </h3>
+            <p class="about-bio-text">
+              خريجة حاسبات ومعلومات وشغوفة بمجال تطوير الويب. بأشتغل على بناء تطبيقات ويب متكاملة،
+              بجمع بين الجانب التقني وتجربة المستخدم. بعشق تحويل المشاكل المعقدة لحلول رقمية عملية.
+            </p>
+            <p class="about-bio-text">
+              خبرتي في علوم الحاسب أعطتني أساس قوي في هندسة البرمجيات وتقنيات الويب الحديثة.
+              بحرص على كتابة كود نظيف وقابل للصيانة، ودايماً متحمسة لتعلم كل جديد.
+            </p>
+          </div>
+
+          <div class="about-quick-info">
+            <div class="quick-info-item">
+              <i class="fa-solid fa-graduation-cap" style="color:var(--primary);"></i>
+              <span>حاسبات ومعلومات</span>
+            </div>
+            <div class="quick-info-item">
+              <i class="fa-solid fa-briefcase" style="color:var(--secondary);"></i>
+              <span>+15 مشروع</span>
+            </div>
+            <div class="quick-info-item">
+              <i class="fa-solid fa-users" style="color:var(--accent);"></i>
+              <span>+10 عميل سعيد</span>
             </div>
           </div>
-          <div class="info">
-            <h3>E-Commerce Platform</h3>
-            <p>A full-featured online store built with React and Node.js.</p>
+
+          <div class="about-services">
+            <h4 class="services-heading">
+              ما أقدمه
+              <i class="fa-solid fa-rocket" style="color:var(--primary);"></i>
+            </h4>
+            <ul class="services-list">
+              <li><span class="service-dot" style="background:var(--primary);"></span>تطوير تطبيقات ويب متكاملة</li>
+              <li><span class="service-dot" style="background:var(--secondary);"></span>تصميم واجهات مستخدم حديثة</li>
+              <li><span class="service-dot" style="background:var(--accent);"></span>تحسين الأداء وسرعة التحميل</li>
+              <li><span class="service-dot" style="background:#10b981;"></span>تطوير مواقع متجاوبة مع جميع الأجهزة</li>
+            </ul>
           </div>
         </div>
-        <div class="portfolio-item" data-category="app" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/service-img-1.webp" alt="Task Manager" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
+
+        <!-- Left side (RTL) - code card + stats + social -->
+        <div class="about-visual-col">
+          <div class="code-card">
+            <div class="code-card-header">
+              <div class="code-dots">
+                <span class="code-dot" style="background:#ef4444;"></span>
+                <span class="code-dot" style="background:#eab308;"></span>
+                <span class="code-dot" style="background:#22c55e;"></span>
+              </div>
+              <span class="code-filename">youstina.js</span>
+            </div>
+            <div class="code-card-body" dir="ltr">
+              <p style="color:#6b7280;">// من أنا باختصار</p>
+              <p><span style="color:#a855f7;">const</span> <span style="color:#3b82f6;">youstina</span> = {</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">name</span>: <span style="color:#eab308;">"يوستينا هاني"</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">title</span>: <span style="color:#eab308;">"Full-Stack Developer"</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">experience</span>: <span style="color:#f97316;">3</span>+ <span style="color:#eab308;">"years"</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">location</span>: <span style="color:#eab308;">"Cairo, Egypt"</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">skills</span>: [</p>
+              <p class="code-indent-2"><span style="color:#eab308;">"HTML"</span>, <span style="color:#eab308;">"CSS"</span>,</p>
+              <p class="code-indent-2"><span style="color:#eab308;">"JavaScript"</span>, <span style="color:#eab308;">"React.js"</span>,</p>
+              <p class="code-indent-2"><span style="color:#eab308;">"Angular"</span></p>
+              <p class="code-indent-1">],</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">passion</span>: <span style="color:#eab308;">"Building great web experiences"</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">available</span>: <span style="color:#3b82f6;">true</span>,</p>
+              <p class="code-indent-1"><span style="color:#22c55e;">hireable</span>: <span style="color:#3b82f6;">true</span></p>
+              <p>};</p>
+              <p><span style="color:#a855f7;">export default</span> <span style="color:#3b82f6;">youstina</span>;</p>
             </div>
           </div>
-          <div class="info">
-            <h3>Task Manager App</h3>
-            <p>Cross-platform mobile app for managing daily tasks.</p>
-          </div>
-        </div>
-        <div class="portfolio-item" data-category="design" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/assignment-1-CJaFq_Du.png" alt="Brand Identity" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
+
+          <div class="about-stats-row">
+            <div class="stat-card">
+              <div class="stat-number">15+</div>
+              <div class="stat-label">مشروع</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">3+</div>
+              <div class="stat-label">سنوات</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">10+</div>
+              <div class="stat-label">عميل</div>
             </div>
           </div>
-          <div class="info">
-            <h3>Brand Identity Design</h3>
-            <p>Complete visual identity package for a startup.</p>
-          </div>
-        </div>
-        <div class="portfolio-item" data-category="web" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/featured-properties-img-2.png" alt="Dashboard" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
-            </div>
-          </div>
-          <div class="info">
-            <h3>Analytics Dashboard</h3>
-            <p>Real-time data visualization dashboard for business metrics.</p>
-          </div>
-        </div>
-        <div class="portfolio-item" data-category="app" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/service-img-2.webp" alt="Fitness App" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
-            </div>
-          </div>
-          <div class="info">
-            <h3>Fitness Tracker</h3>
-            <p>Mobile app for workout tracking and nutrition planning.</p>
-          </div>
-        </div>
-        <div class="portfolio-item" data-category="design" data-scroll-item data-animate="scale-in">
-          <div class="portfolio-img-wrapper">
-            <img src="./images/service-img-3.webp" alt="UI Design" />
-            <div class="portfolio-overlay">
-              <span class="overlay-label">View Project</span>
-            </div>
-          </div>
-          <div class="info">
-            <h3>SaaS Landing Page</h3>
-            <p>Modern UI/UX design for a SaaS product landing page.</p>
+
+          <div class="about-social">
+            <a href="#" class="social-icon-link" aria-label="GitHub">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="#" class="social-icon-link" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-icon-link" aria-label="Twitter">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="#" class="social-icon-link" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ============================================================
-         TESTIMONIALS SECTION
-         ============================================================ -->
-    <section id="testimonials" data-scroll-section data-scroll-step="4">
-      <div class="testimonials-bg-decoration"></div>
-      <h2 class="section-title" data-fig="04">TESTIMONIALS</h2>
-      <p class="testimonials-intro">Kind words from people I've worked with</p>
+  <!-- ============================================
+       SKILLS SECTION
+       ============================================ -->
+  <section id="skills-section" class="section-block section-alt">
+    <div class="section-bg-glow glow-2"></div>
+
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle" style="color:var(--secondary);">ما أتقنه</span>
+        <h2 class="section-title">المهارات و <span class="title-gradient-2">التقنيات</span></h2>
+        <div class="section-divider" style="background:linear-gradient(to left,var(--secondary),var(--accent));"></div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">HTML</h3>
+            <i class="fa-brands fa-html5 skill-card-icon" style="color:#E34F26;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:95%;"></div>
+          </div>
+          <p class="skill-card-desc">بناء هياكل متقنة ومتاحة للجميع</p>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">CSS</h3>
+            <i class="fa-brands fa-css3-alt skill-card-icon" style="color:#1572B6;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:90%;background:linear-gradient(to left,var(--secondary),var(--accent));"></div>
+          </div>
+          <p class="skill-card-desc">تصاميم متجاوبة مع رسوم متحركة أنيقة</p>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">JavaScript</h3>
+            <i class="fa-brands fa-js skill-card-icon" style="color:#F7DF1E;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:88%;background:linear-gradient(to left,var(--accent),var(--primary));"></div>
+          </div>
+          <p class="skill-card-desc">واجهات تفاعلية ومنطق قوي</p>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">React.js</h3>
+            <i class="fa-brands fa-react skill-card-icon" style="color:#61DAFB;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:85%;"></div>
+          </div>
+          <p class="skill-card-desc">تطبيقات صفحة واحدة قابلة لإعادة الاستخدام</p>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">Angular</h3>
+            <i class="fa-brands fa-angular skill-card-icon" style="color:#DD0031;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:80%;background:linear-gradient(to left,var(--accent),var(--primary));"></div>
+          </div>
+          <p class="skill-card-desc">تطبيقات مؤسسية قوية ومنظمة</p>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-top">
+            <h3 class="skill-card-title">Node.js</h3>
+            <i class="fa-brands fa-node-js skill-card-icon" style="color:#339933;"></i>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="width:75%;background:linear-gradient(to left,var(--secondary),var(--accent));"></div>
+          </div>
+          <p class="skill-card-desc">بناء APIs وخدمات الخلفية</p>
+        </div>
+      </div>
+
+      <div class="skills-bottom-row">
+        <div class="skill-icon-item">
+          <i class="fa-brands fa-html5" style="color:#E34F26;font-size:2.5rem;"></i>
+          <p>HTML5</p>
+        </div>
+        <div class="skill-icon-item">
+          <i class="fa-brands fa-css3-alt" style="color:#1572B6;font-size:2.5rem;"></i>
+          <p>CSS3</p>
+        </div>
+        <div class="skill-icon-item">
+          <i class="fa-brands fa-js" style="color:#F7DF1E;font-size:2.5rem;"></i>
+          <p>JavaScript</p>
+        </div>
+        <div class="skill-icon-item">
+          <i class="fa-brands fa-git-alt" style="color:#f05032;font-size:2.5rem;"></i>
+          <p>Git</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PORTFOLIO SECTION
+       ============================================ -->
+  <section id="portfolio" class="section-block">
+    <div class="section-bg-glow glow-1"></div>
+
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">أعمالي</span>
+        <h2 class="section-title">معرض <span class="title-gradient">المشاريع</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="portfolio-filters" id="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="web">مواقع الويب</button>
+        <button class="filter-btn" data-filter="app">التطبيقات</button>
+        <button class="filter-btn" data-filter="design">التصميم</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolio-grid">
+        <div class="portfolio-item" data-category="web">
+          <div class="portfolio-img-wrap">
+            <img src="./images/featured-properties-img-1.png" alt="متجر إلكتروني" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">موقع ويب</span>
+            <h3 class="portfolio-title">متجر إلكتروني متكامل</h3>
+            <p class="portfolio-desc">منصة تجارة إلكترونية حديثة مع نظام دفع آمن وإدارة المنتجات</p>
+            <div class="portfolio-tech">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="app">
+          <div class="portfolio-img-wrap">
+            <img src="./images/service-img-1.webp" alt="تطبيق مهام" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">تطبيق</span>
+            <h3 class="portfolio-title">تطبيق إدارة المهام</h3>
+            <p class="portfolio-desc">تطبيق ويب تفاعلي لإدارة المهام مع ميزات التعاون الجماعي</p>
+            <div class="portfolio-tech">
+              <span>React Native</span>
+              <span>Firebase</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="design">
+          <div class="portfolio-img-wrap">
+            <img src="./images/assignment-1-CJaFq_Du.png" alt="هوية بصرية" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">تصميم</span>
+            <h3 class="portfolio-title">هوية بصرية لشركة ناشئة</h3>
+            <p class="portfolio-desc">حزمة هوية بصرية متكاملة لشركة ناشئة في مجال التكنولوجيا</p>
+            <div class="portfolio-tech">
+              <span>Figma</span>
+              <span>Illustrator</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="web">
+          <div class="portfolio-img-wrap">
+            <img src="./images/featured-properties-img-2.png" alt="لوحة تحليلات" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">موقع ويب</span>
+            <h3 class="portfolio-title">لوحة تحليلات البيانات</h3>
+            <p class="portfolio-desc">لوحة عرض بيانات تفاعلية لتحليل مؤشرات الأداء والمقاييس</p>
+            <div class="portfolio-tech">
+              <span>React</span>
+              <span>D3.js</span>
+              <span>Node.js</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="app">
+          <div class="portfolio-img-wrap">
+            <img src="./images/service-img-2.webp" alt="تطبيق لياقة" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">تطبيق</span>
+            <h3 class="portfolio-title">تطبيق تتبع اللياقة</h3>
+            <p class="portfolio-desc">تطبيق متكامل لتتبع التمارين والتغذية والتقدم اليومي</p>
+            <div class="portfolio-tech">
+              <span>React Native</span>
+              <span>Express</span>
+              <span>MongoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="portfolio-item" data-category="design">
+          <div class="portfolio-img-wrap">
+            <img src="./images/service-img-3.webp" alt="تصميم UI" loading="lazy" decoding="async" />
+            <div class="portfolio-img-overlay">
+              <span class="overlay-btn">عرض المشروع</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat-badge">تصميم</span>
+            <h3 class="portfolio-title">تصميم صفحة هبوط SaaS</h3>
+            <p class="portfolio-desc">تصميم UI/UX عصري لمنتج SaaS مع تجربة مستخدم سلسة</p>
+            <div class="portfolio-tech">
+              <span>Figma</span>
+              <span>Tailwind</span>
+              <span>Framer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       EXPERIENCE SECTION
+       ============================================ -->
+  <section id="experience" class="section-block section-alt">
+    <div class="section-bg-glow glow-2"></div>
+
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle" style="color:var(--secondary);">مسيرتي المهنية</span>
+        <h2 class="section-title">الخبرة <span class="title-gradient-2">العملية</span></h2>
+        <div class="section-divider" style="background:linear-gradient(to left,var(--secondary),var(--accent));"></div>
+      </div>
+
+      <div class="experience-timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">يناير 2023 - حتى الآن</div>
+            <h3 class="timeline-role">مطورة Full-Stack أول</h3>
+            <div class="timeline-company">Tech Corp Solutions</div>
+            <p class="timeline-desc">قيادة تطوير تطبيقات الويب، الإشراف على فريق المطورين المبتدئين، تصميم حلول قابلة للتوسع.</p>
+            <div class="timeline-tech">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">2021 - 2022</div>
+            <h3 class="timeline-role">مطورة Full-Stack</h3>
+            <div class="timeline-company">Tech Corp Solutions</div>
+            <p class="timeline-desc">تطوير تطبيقات ويب متجاوبة، التعاون مع فرق التصميم، تحسين أداء التطبيقات.</p>
+            <div class="timeline-tech">
+              <span>React</span>
+              <span>JavaScript</span>
+              <span>CSS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">2019 - 2020</div>
+            <h3 class="timeline-role">مطورة واجهات أمامية</h3>
+            <div class="timeline-company">Digital Agency Pro</div>
+            <p class="timeline-desc">بناء واجهات مستخدم من التصاميم، تنفيذ تصاميم متجاوبة، مراجعة الأكواد.</p>
+            <div class="timeline-tech">
+              <span>Angular</span>
+              <span>TypeScript</span>
+              <span>HTML</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-card">
+            <div class="timeline-date">2018 - 2019</div>
+            <h3 class="timeline-role">مطورة ويب مبتدئة</h3>
+            <div class="timeline-company">Web Design Studio</div>
+            <p class="timeline-desc">صيانة مواقع قائمة، إصلاح الأخطاء وتنفيذ الميزات الجديدة، تعلم أفضل الممارسات.</p>
+            <div class="timeline-tech">
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>JavaScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       TESTIMONIALS SECTION
+       ============================================ -->
+  <section id="testimonials" class="section-block">
+    <div class="section-bg-glow glow-1"></div>
+    <div class="testimonials-bg-circle"></div>
+
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">آراء العملاء</span>
+        <h2 class="section-title">ماذا يقول <span class="title-gradient">العملاء</span></h2>
+        <div class="section-divider"></div>
+      </div>
 
       <div class="testimonials-carousel">
         <div class="carousel-track">
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-1.jpg" alt="Sarah Johnson" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">Sarah Johnson</cite>
                   <span class="testimonial-role">CEO at TechCorp</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/techcorp_solutions_logo.jpg" alt="TechCorp" />
-                </div>
               </div>
-              <blockquote>
-                "Youstina delivered an outstanding website that exceeded our expectations.
-                Her attention to detail and technical skills are top-notch."
-              </blockquote>
+              <blockquote>يوستينا قدمت موقعاً استثنائياً فاق توقعاتنا. اهتمامها بالتفاصيل ومهاراتها التقنية من أعلى مستوى.</blockquote>
             </div>
           </div>
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-2.jpg" alt="Mark Rivera" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">Mark Rivera</cite>
                   <span class="testimonial-role">Product Manager</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/digital_agency_pro.jpg" alt="Digital Agency" />
-                </div>
               </div>
-              <blockquote>
-                "Working with Youstina was a pleasure. She understood our vision
-                perfectly and brought it to life with clean, efficient code."
-              </blockquote>
+              <blockquote>العمل مع يوستينا كان ممتعاً جداً. فهمت رؤيتنا تماماً وقدمتها بكود نظيف وفعال.</blockquote>
             </div>
           </div>
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-3.jpg" alt="Emily Chen" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">Emily Chen</cite>
                   <span class="testimonial-role">Founder at DesignStudio</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/Web_design_Studio.webp" alt="DesignStudio" />
-                </div>
               </div>
-              <blockquote>
-                "The web application Youstina built for us has transformed our
-                workflow. Highly recommended for any full-stack project."
-              </blockquote>
+              <blockquote>تطبيق الويب اللي بنته يوستينا غير شكل شغلنا. أنصح بأي مشروع Full-Stack.</blockquote>
             </div>
           </div>
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-4.jpg" alt="David Kim" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">David Kim</cite>
                   <span class="testimonial-role">CTO at CloudScale</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/service-img-4.png" alt="CloudScale" />
-                </div>
               </div>
-              <blockquote>
-                "Youstina's full-stack expertise is remarkable. She delivered a
-                complex dashboard that seamlessly integrated with our existing
-                infrastructure ahead of schedule."
-              </blockquote>
+              <blockquote>خبرة يوستينا في Full-Stack رائعة. قدمت لوحة تحكم معقدة بتكامل سلس قبل الموعد المحدد.</blockquote>
             </div>
           </div>
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-5.jpg" alt="Lisa Martinez" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">Lisa Martinez</cite>
                   <span class="testimonial-role">UX Director at PixelPerfect</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/service-img-5.png" alt="PixelPerfect" />
-                </div>
               </div>
-              <blockquote>
-                "The UI/UX work Youstina did on our platform was outstanding.
-                She has a rare ability to blend beautiful design with solid
-                technical implementation."
-              </blockquote>
+              <blockquote>شغل UI/UX اللي عملته يوستينا على منصتنا كان رائع. عندها قدرة نادرة على دمج التصميم مع التقنية.</blockquote>
             </div>
           </div>
           <div class="carousel-slide">
             <div class="testimonial-card">
-              <span class="testimonial-quote-mark">"</span>
+              <span class="testimonial-quote">"</span>
               <div class="testimonial-top">
                 <div class="testimonial-avatar">
                   <img src="./images/avatar-6.jpg" alt="James Wilson" />
                 </div>
                 <div class="testimonial-info">
-                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <div class="testimonial-stars">★★★★★</div>
                   <cite class="testimonial-name">James Wilson</cite>
                   <span class="testimonial-role">Founder at VentureLab</span>
                 </div>
-                <div class="testimonial-company">
-                  <img src="./images/featured-properties-img-3.png" alt="VentureLab" />
-                </div>
               </div>
-              <blockquote>
-                "Working with Youstina was the best decision we made for our
-                startup. She built our entire MVP in record time with clean,
-                scalable code."
-              </blockquote>
+              <blockquote>الشغل مع يوستينا كان أفضل قرار لمشروعنا. بنت الـ MVP كامل في وقت قياسي بكود نظيف وقابل للتوسع.</blockquote>
             </div>
           </div>
         </div>
 
         <div class="carousel-controls">
-          <button class="carousel-btn-prev" aria-label="Previous slide">
+          <button class="carousel-btn carousel-btn-prev" aria-label="السابق">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <button class="carousel-btn-next" aria-label="Next slide">
+          <button class="carousel-btn carousel-btn-next" aria-label="التالي">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </div>
 
         <div class="carousel-dots">
-          <button class="carousel-dot active" aria-label="Go to slide 1"></button>
-          <button class="carousel-dot" aria-label="Go to slide 2"></button>
-          <button class="carousel-dot" aria-label="Go to slide 3"></button>
-          <button class="carousel-dot" aria-label="Go to slide 4"></button>
-          <button class="carousel-dot" aria-label="Go to slide 5"></button>
-          <button class="carousel-dot" aria-label="Go to slide 6"></button>
+          <button class="carousel-dot active" aria-label="الشريحة 1"></button>
+          <button class="carousel-dot" aria-label="الشريحة 2"></button>
+          <button class="carousel-dot" aria-label="الشريحة 3"></button>
+          <button class="carousel-dot" aria-label="الشريحة 4"></button>
+          <button class="carousel-dot" aria-label="الشريحة 5"></button>
+          <button class="carousel-dot" aria-label="الشريحة 6"></button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ============================================================
-         CONTACT SECTION
-         ============================================================ -->
-    <section id="contact" data-scroll-section data-scroll-step="5">
-      <h2 class="section-title" data-fig="05">CONTACT</h2>
-      <p class="contact-intro">
-        Feel free to reach out to me using the form below. I'd love to hear from you!
-      </p>
+  <!-- ============================================
+       CONTACT SECTION
+       ============================================ -->
+  <section id="contact" class="section-block section-alt">
+    <div class="section-bg-glow glow-2"></div>
 
-      <div class="contact-cards">
-        <div class="contact-card" data-scroll-item data-animate="scale-in">
-          <div class="contact-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          </div>
-          <h4>Email</h4>
-          <p>youstina.hany@example.com</p>
-        </div>
-        <div class="contact-card" data-scroll-item data-animate="scale-in">
-          <div class="contact-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <h4>Phone</h4>
-          <p>+20 123 456 7890</p>
-        </div>
-        <div class="contact-card" data-scroll-item data-animate="scale-in">
-          <div class="contact-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <h4>Location</h4>
-          <p>Cairo, Egypt</p>
-        </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle" style="color:var(--secondary);">تواصل معي</span>
+        <h2 class="section-title">يلا نبدأ <span class="title-gradient-2">مشروعك</span></h2>
+        <div class="section-divider" style="background:linear-gradient(to left,var(--secondary),var(--accent));"></div>
+        <p class="contact-intro-text">عندك فكرة مشروع؟ تعالى نتكلم ونحولها لواقع</p>
       </div>
 
-      <form class="contact-form" action="./pages/done.html" method="post">
-        <fieldset data-scroll-item data-animate="scale-in">
-          <legend>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Personal Information
-          </legend>
-          <table>
-            <tbody>
-              <tr>
-                <td><label for="First_Name">First Name:*</label></td>
-                <td><div class="input-wrap"><input type="text" name="First Name" id="First_Name" required /><span class="input-focus-line"></span></div></td>
-                <td><label for="Last_Name">Last Name:*</label></td>
-                <td><div class="input-wrap"><input type="text" name="Last Name" id="Last_Name" required /><span class="input-focus-line"></span></div></td>
-              </tr>
-              <tr>
-                <td><label for="Email">Email Address:*</label></td>
-                <td><div class="input-wrap"><input type="email" name="Email" id="Email" required /><span class="input-focus-line"></span></div></td>
-                <td><label for="Phone_Number">Phone Number:</label></td>
-                <td><div class="input-wrap"><input type="tel" name="Phone Number" id="Phone_Number" /><span class="input-focus-line"></span></div></td>
-              </tr>
-              <tr>
-                <td><label for="Meeting_date">Preferred Meeting Date:</label></td>
-                <td><div class="input-wrap"><input type="date" name="Meeting_date" id="Meeting_date" /><span class="input-focus-line"></span></div></td>
-                <td><label for="contact_time">Best Time to Contact:</label></td>
-                <td><div class="input-wrap"><input type="time" name="contact_time" id="contact_time" /><span class="input-focus-line"></span></div></td>
-              </tr>
-            </tbody>
-          </table>
-        </fieldset>
+      <div class="contact-wrapper">
+        <div class="contact-info-cards">
+          <div class="contact-info-card">
+            <div class="contact-icon-box">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <h4>البريد الإلكتروني</h4>
+            <p>youstina.hany@example.com</p>
+            <span class="contact-card-note">جاهزة للرد خلال 24 ساعة</span>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-icon-box">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <h4>رقم الهاتف</h4>
+            <p>+20 123 456 7890</p>
+            <span class="contact-card-note">متاحة من 9 صباحاً - 5 مساءً</span>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-icon-box">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h4>الموقع</h4>
+            <p>القاهرة، مصر</p>
+            <span class="contact-card-note">متاحة للعمل عن بعد</span>
+          </div>
+          <div class="contact-info-card contact-social-card">
+            <h4>تابعوني على</h4>
+            <div class="contact-social-links">
+              <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+        </div>
 
-        <fieldset data-scroll-item data-animate="scale-in">
-          <legend>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Project Details
-          </legend>
-          <table>
-            <tbody>
-              <tr>
-                <td><label for="Project_Type">Project Type:*</label></td>
-                <td><div class="input-wrap"><input type="text" name="Project_Type" id="Project_Type" required /><span class="input-focus-line"></span></div></td>
-                <td><label for="Project_Describtion">Project Description:*</label></td>
-                <td><div class="input-wrap"><textarea name="Project_Describtion" id="Project_Describtion"></textarea><span class="input-focus-line"></span></div></td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <div class="option-group">
-                    <span class="option-group-label">Budget Range:</span>
-                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="under $5,000" /><span class="radio-mark"></span>Under $5,000</label>
-                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="$5,000 - $10,000" /><span class="radio-mark"></span>$5,000 - $10,000</label>
-                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="$10,000 - $25,000" /><span class="radio-mark"></span>$10,000 - $25,000</label>
-                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="Over $25,000" /><span class="radio-mark"></span>Over $25,000</label>
-                  </div>
-                </td>
-                <td colspan="2">
-                  <div class="option-group">
-                    <span class="option-group-label">Services Required:</span>
-                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="UI/UX Design" /><span class="checkbox-mark"></span>UI/UX Design</label>
-                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Frontend Development" /><span class="checkbox-mark"></span>Frontend Development</label>
-                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Backend Development" /><span class="checkbox-mark"></span>Backend Development</label>
-                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Hosting & Deployment" /><span class="checkbox-mark"></span>Hosting & Deployment</label>
-                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Maintenance & Support" /><span class="checkbox-mark"></span>Maintenance & Support</label>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="4">
-                  <label for="hear_about_me">How did you hear about me?</label>
-                  <div class="input-wrap"><select name="hear_about_me" id="hear_about_me">
-                    <optgroup label="Marketing methods">
-                      <option disabled selected value="">---Select---</option>
-                      <option value="Facebook">Facebook</option>
-                      <option value="Instagram">Instagram</option>
-                      <option value="LinkedIn">LinkedIn</option>
-                      <option value="GitHub">GitHub</option>
-                    </optgroup>
-                  </select><span class="input-focus-line"></span></div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </fieldset>
+        <form class="contact-form" action="./pages/done.html" method="post">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">الاسم الكامل</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">البريد الإلكتروني</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">رقم الهاتف</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="project-type">نوع المشروع</label>
+              <select id="project-type" name="project-type">
+                <option value="">اختر نوع المشروع</option>
+                <option value="web">موقع ويب</option>
+                <option value="webapp">تطبيق ويب</option>
+                <option value="mobile">تطبيق جوال</option>
+                <option value="design">تصميم UI/UX</option>
+                <option value="consult">استشارة تقنية</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">تفاصيل المشروع</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-primary submit-btn">
+              <i class="fa-solid fa-paper-plane"></i>
+              ابعت الرسالة
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
 
-        <div class="form-buttons" data-form-buttons>
-          <button type="submit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-            Send Message
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <span>يوستينا هاني</span>
+          </div>
+          <p class="footer-about-text">
+            مطورة ويب متكاملة، بشتغل على تحويل الأفكار لواقع رقمي. بتجمع بين التصميم الجمالي والأداء القوي.
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>روابط سريعة</h4>
+          <ul class="footer-links">
+            <li><a href="#hero-section">الرئيسية</a></li>
+            <li><a href="#about">عني</a></li>
+            <li><a href="#portfolio">الأعمال</a></li>
+            <li><a href="#experience">الخبرة</a></li>
+            <li><a href="#testimonials">التوصيات</a></li>
+            <li><a href="#contact">تواصل</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الخدمات</h4>
+          <ul class="footer-links">
+            <li><a href="#">تطوير الويب</a></li>
+            <li><a href="#">تطوير التطبيقات</a></li>
+            <li><a href="#">تصميم UI/UX</a></li>
+            <li><a href="#">الاستشارات التقنية</a></li>
+            <li><a href="#">تحسين الأداء</a></li>
+            <li><a href="#">الصيانة والدعم</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 يوستينا هاني. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       CUSTOMIZER SIDEBAR
+       ============================================ -->
+  <aside class="customizer-sidebar" id="customizer-sidebar">
+    <button id="customizer-toggle" aria-label="فتح التخصيص">
+      <i class="fa-solid fa-palette"></i>
+    </button>
+
+    <div class="customizer-content">
+      <h4 class="customizer-title">تخصيص المظهر</h4>
+
+      <div class="customizer-section">
+        <h5>نوع الخط</h5>
+        <div class="font-options">
+          <button class="font-btn active" data-font="'Tajawal', sans-serif">
+            <span class="font-btn-label">Tajawal</span>
+            <span class="font-btn-desc">الخط الافتراضي</span>
+            <i class="fa-solid fa-check font-btn-check"></i>
           </button>
-          <button type="reset">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            Clear Form
+          <button class="font-btn" data-font="'Alexandria', sans-serif">
+            <span class="font-btn-label">Alexandria</span>
+            <span class="font-btn-desc">Alexandria</span>
+            <i class="fa-solid fa-check font-btn-check"></i>
+          </button>
+          <button class="font-btn" data-font="'Cairo', sans-serif">
+            <span class="font-btn-label">Cairo</span>
+            <span class="font-btn-desc">Cairo</span>
+            <i class="fa-solid fa-check font-btn-check"></i>
           </button>
         </div>
-      </form>
-    </section>
-
-    <!-- ============================================================
-         CUSTOMIZER SIDEBAR
-         ============================================================ -->
-    <aside class="customizer-sidebar">
-      <button id="customizer-toggle" aria-label="Toggle customizer">&#9881;</button>
-
-      <h4>Theme Colors</h4>
-      <div class="color-swatches">
-        <button class="color-swatch" data-color="#4a7cff" style="background:#4a7cff" aria-label="Blue"></button>
-        <button class="color-swatch" data-color="#28a745" style="background:#28a745" aria-label="Green"></button>
-        <button class="color-swatch" data-color="#dc3545" style="background:#dc3545" aria-label="Red"></button>
-        <button class="color-swatch" data-color="#ff7f50" style="background:#ff7f50" aria-label="Coral"></button>
-        <button class="color-swatch" data-color="#6f42c1" style="background:#6f42c1" aria-label="Purple"></button>
-        <button class="color-swatch" data-color="#20c997" style="background:#20c997" aria-label="Teal"></button>
       </div>
 
-      <h4>Font Style</h4>
-      <div class="font-options">
-        <button class="font-btn" data-font="'Segoe UI', Tahoma, sans-serif">Segoe UI</button>
-        <button class="font-btn" data-font="'Poppins', sans-serif">Poppins</button>
-        <button class="font-btn" data-font="'Roboto', sans-serif">Roboto</button>
-        <button class="font-btn" data-font="'Merriweather', serif">Merriweather</button>
+      <div class="customizer-section">
+        <h5>لون الثيم</h5>
+        <div class="color-options">
+          <button class="color-swatch" data-color="#4a7cff" style="background:#4a7cff" aria-label="أزرق"></button>
+          <button class="color-swatch" data-color="#8b5cf6" style="background:#8b5cf6" aria-label="بنفسجي"></button>
+          <button class="color-swatch" data-color="#06b6d4" style="background:#06b6d4" aria-label="سماوي"></button>
+          <button class="color-swatch" data-color="#f59e0b" style="background:#f59e0b" aria-label="عنبر"></button>
+          <button class="color-swatch" data-color="#ef4444" style="background:#ef4444" aria-label="أحمر"></button>
+          <button class="color-swatch" data-color="#10b981" style="background:#10b981" aria-label="أخضر"></button>
+          <button class="color-swatch" data-color="#ec4899" style="background:#ec4899" aria-label="وردي"></button>
+          <button class="color-swatch" data-color="#f97316" style="background:#f97316" aria-label="برتقالي"></button>
+        </div>
       </div>
-    </aside>
 
-    <!-- ============================================================
-         SCROLL TO TOP BUTTON
-         ============================================================ -->
-    <button id="scroll-to-top" aria-label="Scroll to top">&#8593;</button>
+      <button id="customizer-reset" class="customizer-reset-btn">
+        <i class="fa-solid fa-rotate-left"></i>
+        إعادة الضبط
+      </button>
+    </div>
+  </aside>
 
-    <!-- ============================================================
-         SCRIPTS
-         ============================================================ -->
-    <script src="script.js"></script>
-  </body>
+  <!-- ============================================
+       SCROLL TO TOP
+       ============================================ -->
+  <button id="scroll-to-top" aria-label="العودة للأعلى">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ============================================
+       SCRIPTS
+       ============================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>
