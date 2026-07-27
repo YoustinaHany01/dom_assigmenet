@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Youstina Hany | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  </head>
+  <body>
+
+    <div id="scroll-progress"></div>
+
+    <div id="step-indicator">
+      <div class="step-dot active" data-step="0"></div>
+      <div class="step-dot" data-step="1"></div>
+      <div class="step-dot" data-step="2"></div>
+      <div class="step-dot" data-step="3"></div>
+      <div class="step-dot" data-step="4"></div>
+      <div class="step-dot" data-step="5"></div>
+    </div>
+
+    <!-- ============================================================
+         NAVBAR
+         ============================================================ -->
+    <nav class="navbar">
+      <div class="logo">YH</div>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    </nav>
+
+    <!-- ============================================================
+         HOME / HERO SECTION
+         ============================================================ -->
+    <section id="home" class="hero-section" data-scroll-section>
+      <div id="three-canvas-container"></div>
+      <div class="hero-bg" style="background-image: url('./images/hero-bg-img.png');"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-img-wrapper" data-entrance>
+          <img src="./images/youstina.jpeg" alt="Youstina Hany" class="hero-img" />
+        </div>
+        <h1 class="hero-title" data-entrance>Youstina Hany</h1>
+        <p class="hero-subtitle" data-entrance>Professional <span class="text-accent">Web Developer</span></p>
+        <p class="hero-tagline" data-entrance>Full-Stack Developer · UI/UX Enthusiast · Creative Problem Solver</p>
+        <div class="hero-buttons" data-entrance>
+          <a href="#portfolio" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-outline">Get In Touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT SECTION
+         ============================================================ -->
+    <section id="about" data-scroll-section data-scroll-step="1">
+      <h2 class="section-title" data-fig="01">ABOUT</h2>
+      <div class="about-content">
+        <div class="about-image" data-scroll-item data-animate="flip-in">
+          <img src="./images/youstina.jpeg" alt="Youstina Hany's photo" />
+        </div>
+        <div class="about-text" data-scroll-item data-animate="slide-right">
+          <p>
+            Hello! I'm a Computer Science graduate and a passionate Full-Stack
+            Developer. I specialize in building end-to-end web applications,
+            combining technical logic with seamless user experiences. I thrive
+            on turning complex problems into functional, high-quality digital
+            solutions.
+          </p>
+          <p style="margin-top: 1rem;">
+            My background in Computer Science has given me a solid foundation in
+            software engineering and modern web technologies. I am committed to
+            writing clean, maintainable code and am always eager to learn and
+            adapt to the ever-evolving tech landscape.
+          </p>
+          <h3 style="margin-top: 1.5rem; color: var(--primary-color);">Skills</h3>
+          <ul class="skills-list">
+            <li data-scroll-item data-animate="pop-in"><a href="./pages/HTML.html">HTML</a></li>
+            <li data-scroll-item data-animate="pop-in"><a href="./pages/CSS.html">CSS</a></li>
+            <li data-scroll-item data-animate="pop-in"><a href="./pages/JS.html">JavaScript</a></li>
+            <li data-scroll-item data-animate="pop-in"><a href="./pages/Reactjs.html">React.js</a></li>
+            <li data-scroll-item data-animate="pop-in"><a href="./pages/Angular.html">Angular</a></li>
+          </ul>
+          <div class="social-links">
+            <a href="#"><img src="./images/Facebook_logo_(square).png" alt="Facebook" /></a>
+            <a href="#"><img src="./images/LinkedIn_icon.svg.webp" alt="LinkedIn" /></a>
+            <a href="#"><img src="./images/instagram-6338393_960_720.webp" alt="Instagram" /></a>
+            <a href="#"><img src="./images/github_logo.png" alt="GitHub" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         EXPERIENCE SECTION
+         ============================================================ -->
+    <section id="experience" data-scroll-section data-scroll-step="2">
+      <h2 class="section-title" data-fig="02">EXPERIENCE</h2>
+      <p style="text-align: center; margin-bottom: 2rem;">Professional Experience Overview</p>
+      <table class="experience-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Logo</th>
+            <th>Role</th>
+            <th>Key Achievements</th>
+            <th>Dates</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-scroll-item data-animate="slide-left">
+            <td rowspan="2">Tech Corp Solutions</td>
+            <td rowspan="2">
+              <img src="./images/techcorp_solutions_logo.jpg" alt="TechCorp logo" />
+            </td>
+            <td>Senior FullStack Developer</td>
+            <td>
+              <ul>
+                <li>Lead development of web applications</li>
+                <li>Mentor junior developers</li>
+                <li>Architect scalable solutions</li>
+              </ul>
+            </td>
+            <td>Jan 2023 - Present</td>
+          </tr>
+          <tr data-scroll-item data-animate="slide-right">
+            <td>FullStack Developer</td>
+            <td>
+              <ul>
+                <li>Developed responsive web applications</li>
+                <li>Collaborated with design teams</li>
+                <li>Optimized application performance</li>
+              </ul>
+            </td>
+            <td>2021 - 2020</td>
+          </tr>
+          <tr data-scroll-item data-animate="slide-left">
+            <td>Digital Agency Pro</td>
+            <td>
+              <img src="./images/digital_agency_pro.jpg" alt="Digital Agency logo" />
+            </td>
+            <td>Frontend Developer</td>
+            <td>
+              <ul>
+                <li>Built user interfaces from mockups</li>
+                <li>Implemented responsive designs</li>
+                <li>Conducted code reviews</li>
+              </ul>
+            </td>
+            <td>2019 - 2020</td>
+          </tr>
+          <tr data-scroll-item data-animate="slide-right">
+            <td>Web Design Studio</td>
+            <td>
+              <img src="./images/Web_design_Studio.webp" alt="Web Design Studio logo" />
+            </td>
+            <td>Junior Web Developer</td>
+            <td>
+              <ul>
+                <li>Maintained existing websites</li>
+                <li>Fixed bugs and implemented features</li>
+                <li>Learned best practices</li>
+              </ul>
+            </td>
+            <td>2019 - 2020</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5">Total Experience: 5+ years in Web Development</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <!-- ============================================================
+         PORTFOLIO SECTION
+         ============================================================ -->
+    <section id="portfolio" data-scroll-section data-scroll-step="3">
+      <h2 class="section-title" data-fig="03">PORTFOLIO</h2>
+
+      <div class="portfolio-tabs">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="app">App</button>
+        <button class="filter-btn" data-filter="design">Design</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-item" data-category="web" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/featured-properties-img-1.png" alt="E-Commerce" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>E-Commerce Platform</h3>
+            <p>A full-featured online store built with React and Node.js.</p>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="app" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/service-img-1.webp" alt="Task Manager" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>Task Manager App</h3>
+            <p>Cross-platform mobile app for managing daily tasks.</p>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="design" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/assignment-1-CJaFq_Du.png" alt="Brand Identity" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>Brand Identity Design</h3>
+            <p>Complete visual identity package for a startup.</p>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="web" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/featured-properties-img-2.png" alt="Dashboard" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>Analytics Dashboard</h3>
+            <p>Real-time data visualization dashboard for business metrics.</p>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="app" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/service-img-2.webp" alt="Fitness App" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>Fitness Tracker</h3>
+            <p>Mobile app for workout tracking and nutrition planning.</p>
+          </div>
+        </div>
+        <div class="portfolio-item" data-category="design" data-scroll-item data-animate="scale-in">
+          <div class="portfolio-img-wrapper">
+            <img src="./images/service-img-3.webp" alt="UI Design" />
+            <div class="portfolio-overlay">
+              <span class="overlay-label">View Project</span>
+            </div>
+          </div>
+          <div class="info">
+            <h3>SaaS Landing Page</h3>
+            <p>Modern UI/UX design for a SaaS product landing page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIALS SECTION
+         ============================================================ -->
+    <section id="testimonials" data-scroll-section data-scroll-step="4">
+      <div class="testimonials-bg-decoration"></div>
+      <h2 class="section-title" data-fig="04">TESTIMONIALS</h2>
+      <p class="testimonials-intro">Kind words from people I've worked with</p>
+
+      <div class="testimonials-carousel">
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-1.jpg" alt="Sarah Johnson" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">Sarah Johnson</cite>
+                  <span class="testimonial-role">CEO at TechCorp</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/techcorp_solutions_logo.jpg" alt="TechCorp" />
+                </div>
+              </div>
+              <blockquote>
+                "Youstina delivered an outstanding website that exceeded our expectations.
+                Her attention to detail and technical skills are top-notch."
+              </blockquote>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-2.jpg" alt="Mark Rivera" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">Mark Rivera</cite>
+                  <span class="testimonial-role">Product Manager</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/digital_agency_pro.jpg" alt="Digital Agency" />
+                </div>
+              </div>
+              <blockquote>
+                "Working with Youstina was a pleasure. She understood our vision
+                perfectly and brought it to life with clean, efficient code."
+              </blockquote>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-3.jpg" alt="Emily Chen" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">Emily Chen</cite>
+                  <span class="testimonial-role">Founder at DesignStudio</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/Web_design_Studio.webp" alt="DesignStudio" />
+                </div>
+              </div>
+              <blockquote>
+                "The web application Youstina built for us has transformed our
+                workflow. Highly recommended for any full-stack project."
+              </blockquote>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-4.jpg" alt="David Kim" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">David Kim</cite>
+                  <span class="testimonial-role">CTO at CloudScale</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/service-img-4.png" alt="CloudScale" />
+                </div>
+              </div>
+              <blockquote>
+                "Youstina's full-stack expertise is remarkable. She delivered a
+                complex dashboard that seamlessly integrated with our existing
+                infrastructure ahead of schedule."
+              </blockquote>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-5.jpg" alt="Lisa Martinez" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">Lisa Martinez</cite>
+                  <span class="testimonial-role">UX Director at PixelPerfect</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/service-img-5.png" alt="PixelPerfect" />
+                </div>
+              </div>
+              <blockquote>
+                "The UI/UX work Youstina did on our platform was outstanding.
+                She has a rare ability to blend beautiful design with solid
+                technical implementation."
+              </blockquote>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="testimonial-card">
+              <span class="testimonial-quote-mark">"</span>
+              <div class="testimonial-top">
+                <div class="testimonial-avatar">
+                  <img src="./images/avatar-6.jpg" alt="James Wilson" />
+                </div>
+                <div class="testimonial-info">
+                  <div class="testimonial-stars" aria-label="5 stars">★★★★★</div>
+                  <cite class="testimonial-name">James Wilson</cite>
+                  <span class="testimonial-role">Founder at VentureLab</span>
+                </div>
+                <div class="testimonial-company">
+                  <img src="./images/featured-properties-img-3.png" alt="VentureLab" />
+                </div>
+              </div>
+              <blockquote>
+                "Working with Youstina was the best decision we made for our
+                startup. She built our entire MVP in record time with clean,
+                scalable code."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn-prev" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="carousel-btn-next" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="carousel-dots">
+          <button class="carousel-dot active" aria-label="Go to slide 1"></button>
+          <button class="carousel-dot" aria-label="Go to slide 2"></button>
+          <button class="carousel-dot" aria-label="Go to slide 3"></button>
+          <button class="carousel-dot" aria-label="Go to slide 4"></button>
+          <button class="carousel-dot" aria-label="Go to slide 5"></button>
+          <button class="carousel-dot" aria-label="Go to slide 6"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT SECTION
+         ============================================================ -->
+    <section id="contact" data-scroll-section data-scroll-step="5">
+      <h2 class="section-title" data-fig="05">CONTACT</h2>
+      <p class="contact-intro">
+        Feel free to reach out to me using the form below. I'd love to hear from you!
+      </p>
+
+      <div class="contact-cards">
+        <div class="contact-card" data-scroll-item data-animate="scale-in">
+          <div class="contact-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h4>Email</h4>
+          <p>youstina.hany@example.com</p>
+        </div>
+        <div class="contact-card" data-scroll-item data-animate="scale-in">
+          <div class="contact-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h4>Phone</h4>
+          <p>+20 123 456 7890</p>
+        </div>
+        <div class="contact-card" data-scroll-item data-animate="scale-in">
+          <div class="contact-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h4>Location</h4>
+          <p>Cairo, Egypt</p>
+        </div>
+      </div>
+
+      <form class="contact-form" action="./pages/done.html" method="post">
+        <fieldset data-scroll-item data-animate="scale-in">
+          <legend>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Personal Information
+          </legend>
+          <table>
+            <tbody>
+              <tr>
+                <td><label for="First_Name">First Name:*</label></td>
+                <td><div class="input-wrap"><input type="text" name="First Name" id="First_Name" required /><span class="input-focus-line"></span></div></td>
+                <td><label for="Last_Name">Last Name:*</label></td>
+                <td><div class="input-wrap"><input type="text" name="Last Name" id="Last_Name" required /><span class="input-focus-line"></span></div></td>
+              </tr>
+              <tr>
+                <td><label for="Email">Email Address:*</label></td>
+                <td><div class="input-wrap"><input type="email" name="Email" id="Email" required /><span class="input-focus-line"></span></div></td>
+                <td><label for="Phone_Number">Phone Number:</label></td>
+                <td><div class="input-wrap"><input type="tel" name="Phone Number" id="Phone_Number" /><span class="input-focus-line"></span></div></td>
+              </tr>
+              <tr>
+                <td><label for="Meeting_date">Preferred Meeting Date:</label></td>
+                <td><div class="input-wrap"><input type="date" name="Meeting_date" id="Meeting_date" /><span class="input-focus-line"></span></div></td>
+                <td><label for="contact_time">Best Time to Contact:</label></td>
+                <td><div class="input-wrap"><input type="time" name="contact_time" id="contact_time" /><span class="input-focus-line"></span></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+
+        <fieldset data-scroll-item data-animate="scale-in">
+          <legend>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Project Details
+          </legend>
+          <table>
+            <tbody>
+              <tr>
+                <td><label for="Project_Type">Project Type:*</label></td>
+                <td><div class="input-wrap"><input type="text" name="Project_Type" id="Project_Type" required /><span class="input-focus-line"></span></div></td>
+                <td><label for="Project_Describtion">Project Description:*</label></td>
+                <td><div class="input-wrap"><textarea name="Project_Describtion" id="Project_Describtion"></textarea><span class="input-focus-line"></span></div></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="option-group">
+                    <span class="option-group-label">Budget Range:</span>
+                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="under $5,000" /><span class="radio-mark"></span>Under $5,000</label>
+                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="$5,000 - $10,000" /><span class="radio-mark"></span>$5,000 - $10,000</label>
+                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="$10,000 - $25,000" /><span class="radio-mark"></span>$10,000 - $25,000</label>
+                    <label class="custom-radio"><input type="radio" name="Budget_Range" value="Over $25,000" /><span class="radio-mark"></span>Over $25,000</label>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <div class="option-group">
+                    <span class="option-group-label">Services Required:</span>
+                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="UI/UX Design" /><span class="checkbox-mark"></span>UI/UX Design</label>
+                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Frontend Development" /><span class="checkbox-mark"></span>Frontend Development</label>
+                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Backend Development" /><span class="checkbox-mark"></span>Backend Development</label>
+                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Hosting & Deployment" /><span class="checkbox-mark"></span>Hosting & Deployment</label>
+                    <label class="custom-checkbox"><input type="checkbox" name="Services_Required" value="Maintenance & Support" /><span class="checkbox-mark"></span>Maintenance & Support</label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <label for="hear_about_me">How did you hear about me?</label>
+                  <div class="input-wrap"><select name="hear_about_me" id="hear_about_me">
+                    <optgroup label="Marketing methods">
+                      <option disabled selected value="">---Select---</option>
+                      <option value="Facebook">Facebook</option>
+                      <option value="Instagram">Instagram</option>
+                      <option value="LinkedIn">LinkedIn</option>
+                      <option value="GitHub">GitHub</option>
+                    </optgroup>
+                  </select><span class="input-focus-line"></span></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </fieldset>
+
+        <div class="form-buttons" data-form-buttons>
+          <button type="submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
+          <button type="reset">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            Clear Form
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============================================================
+         CUSTOMIZER SIDEBAR
+         ============================================================ -->
+    <aside class="customizer-sidebar">
+      <button id="customizer-toggle" aria-label="Toggle customizer">&#9881;</button>
+
+      <h4>Theme Colors</h4>
+      <div class="color-swatches">
+        <button class="color-swatch" data-color="#4a7cff" style="background:#4a7cff" aria-label="Blue"></button>
+        <button class="color-swatch" data-color="#28a745" style="background:#28a745" aria-label="Green"></button>
+        <button class="color-swatch" data-color="#dc3545" style="background:#dc3545" aria-label="Red"></button>
+        <button class="color-swatch" data-color="#ff7f50" style="background:#ff7f50" aria-label="Coral"></button>
+        <button class="color-swatch" data-color="#6f42c1" style="background:#6f42c1" aria-label="Purple"></button>
+        <button class="color-swatch" data-color="#20c997" style="background:#20c997" aria-label="Teal"></button>
+      </div>
+
+      <h4>Font Style</h4>
+      <div class="font-options">
+        <button class="font-btn" data-font="'Segoe UI', Tahoma, sans-serif">Segoe UI</button>
+        <button class="font-btn" data-font="'Poppins', sans-serif">Poppins</button>
+        <button class="font-btn" data-font="'Roboto', sans-serif">Roboto</button>
+        <button class="font-btn" data-font="'Merriweather', serif">Merriweather</button>
+      </div>
+    </aside>
+
+    <!-- ============================================================
+         SCROLL TO TOP BUTTON
+         ============================================================ -->
+    <button id="scroll-to-top" aria-label="Scroll to top">&#8593;</button>
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <script src="script.js"></script>
+  </body>
+</html>
